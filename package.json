@@ -1,0 +1,14 @@
+{
+  "name": "omp-inline-snippets",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "omp": { "extensions": ["./src/index.ts"] },
+  "scripts": { "test": "bun test", "check": "tsc --noEmit" },
+  "devDependencies": {
+    "@oh-my-pi/pi-coding-agent": "file:/Users/jdvans/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent",
+    "@oh-my-pi/pi-tui": "file:/Users/jdvans/.bun/install/global/node_modules/@oh-my-pi/pi-tui",
+    "@types/bun": "latest",
+    "typescript": "^5.9.0"
+  }
+}
