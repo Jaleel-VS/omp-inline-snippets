@@ -5,9 +5,9 @@
     "": {
       "name": "omp-inline-snippets",
       "devDependencies": {
-        "@oh-my-pi/pi-coding-agent": "file:/Users/jdvans/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent",
-        "@oh-my-pi/pi-tui": "file:/Users/jdvans/.bun/install/global/node_modules/@oh-my-pi/pi-tui",
-        "@types/bun": "latest",
+        "@oh-my-pi/pi-coding-agent": "18.6.0",
+        "@oh-my-pi/pi-tui": "18.6.0",
+        "@types/bun": "1.4.2",
         "typescript": "^5.9.0",
       },
     },
@@ -93,7 +93,7 @@
 
     "@oh-my-pi/pi-catalog": ["@oh-my-pi/pi-catalog@18.6.0", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/@oh-my-pi/pi-catalog/-/pi-catalog-18.6.0.tgz", { "dependencies": { "@oh-my-pi/omptype": "18.6.0", "@oh-my-pi/pi-utils": "18.6.0" } }, "sha512-BEpI4dKy9IvkbvPoPSJGAFzaMCXVt+VZDllbbLqE03jFsYmrfW1J5JCR6C42SCHM20YFzIx0CbVUsewpBGCUqw=="],
 
-    "@oh-my-pi/pi-coding-agent": ["@oh-my-pi/pi-coding-agent@file:../../.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent", { "dependencies": { "@babel/parser": "^7.29.7", "@oh-my-pi/omp-stats": "18.6.0", "@oh-my-pi/omptype": "18.6.0", "@oh-my-pi/pi-agent-core": "18.6.0", "@oh-my-pi/pi-ai": "18.6.0", "@oh-my-pi/pi-catalog": "18.6.0", "@oh-my-pi/pi-mnemopi": "18.6.0", "@oh-my-pi/pi-natives": "18.6.0", "@oh-my-pi/pi-tui": "18.6.0", "@oh-my-pi/pi-utils": "18.6.0", "@oh-my-pi/pi-wire": "18.6.0", "@oh-my-pi/snapcompact": "18.6.0", "@opentelemetry/api": "^1.9.1", "@opentelemetry/api-logs": "^0.220.0", "@opentelemetry/context-async-hooks": "^2.9.0", "@opentelemetry/exporter-logs-otlp-proto": "^0.220.0", "@opentelemetry/exporter-metrics-otlp-proto": "^0.220.0", "@opentelemetry/exporter-trace-otlp-proto": "^0.220.0", "@opentelemetry/resources": "^2.9.0", "@opentelemetry/sdk-logs": "^0.220.0", "@opentelemetry/sdk-metrics": "^2.9.0", "@opentelemetry/sdk-trace-base": "^2.9.0", "@opentelemetry/sdk-trace-node": "^2.9.0", "axe-core": "4.13.0", "puppeteer-core": "25.3.0" }, "devDependencies": { "@types/bun": "^1.3.14" }, "optionalDependencies": { "@huggingface/transformers": "^4.2.0", "sherpa-onnx-node": "1.13.2" }, "bin": { "omp": "dist/cli.js" } }],
+    "@oh-my-pi/pi-coding-agent": ["@oh-my-pi/pi-coding-agent@18.6.0", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/@oh-my-pi/pi-coding-agent/-/pi-coding-agent-18.6.0.tgz", { "dependencies": { "@babel/parser": "^7.29.7", "@oh-my-pi/omp-stats": "18.6.0", "@oh-my-pi/omptype": "18.6.0", "@oh-my-pi/pi-agent-core": "18.6.0", "@oh-my-pi/pi-ai": "18.6.0", "@oh-my-pi/pi-catalog": "18.6.0", "@oh-my-pi/pi-mnemopi": "18.6.0", "@oh-my-pi/pi-natives": "18.6.0", "@oh-my-pi/pi-tui": "18.6.0", "@oh-my-pi/pi-utils": "18.6.0", "@oh-my-pi/pi-wire": "18.6.0", "@oh-my-pi/snapcompact": "18.6.0", "@opentelemetry/api": "^1.9.1", "@opentelemetry/api-logs": "^0.220.0", "@opentelemetry/context-async-hooks": "^2.9.0", "@opentelemetry/exporter-logs-otlp-proto": "^0.220.0", "@opentelemetry/exporter-metrics-otlp-proto": "^0.220.0", "@opentelemetry/exporter-trace-otlp-proto": "^0.220.0", "@opentelemetry/resources": "^2.9.0", "@opentelemetry/sdk-logs": "^0.220.0", "@opentelemetry/sdk-metrics": "^2.9.0", "@opentelemetry/sdk-trace-base": "^2.9.0", "@opentelemetry/sdk-trace-node": "^2.9.0", "axe-core": "4.13.0", "puppeteer-core": "25.3.0" }, "optionalDependencies": { "@huggingface/transformers": "^4.2.0", "sherpa-onnx-node": "1.13.2" }, "bin": { "omp": "dist/cli.js" } }, "sha512-aZkA4WU7sk8vjaJi51EN0Qv+arAYl1IfEgcFxmHioebdtafXF3NJWKDlTfwKFkocbSToq7KjLWwvbRG6rbroSw=="],
 
     "@oh-my-pi/pi-mnemopi": ["@oh-my-pi/pi-mnemopi@18.6.0", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/@oh-my-pi/pi-mnemopi/-/pi-mnemopi-18.6.0.tgz", { "dependencies": { "@oh-my-pi/pi-ai": "18.6.0", "@oh-my-pi/pi-catalog": "18.6.0", "@oh-my-pi/pi-natives": "18.6.0", "@oh-my-pi/pi-utils": "18.6.0" }, "peerDependencies": { "fastembed": "3.0.0", "onnxruntime-node": "1.21.0" }, "optionalPeers": ["fastembed", "onnxruntime-node"], "bin": { "mnemopi": "src/cli.ts" } }, "sha512-iiyp26BPeFSTc6lTncnhfLYWIifGBMhZdDX/hBC2gPVktl5gFvEaigwU54pmt4biWTQFtZgHSplofE4dr380RA=="],
 
@@ -111,7 +111,7 @@
 
     "@oh-my-pi/pi-natives-win32-x64": ["@oh-my-pi/pi-natives-win32-x64@18.6.0", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/@oh-my-pi/pi-natives-win32-x64/-/pi-natives-win32-x64-18.6.0.tgz", {}, "sha512-YptfB2rN9mtpcUq6c6s30I1GcB/pYH1cA4TII2dy4ETk+PzD+j7Bo6gT4N3kwzzgkqhT0S8bb7DZMoz1G7wJBw=="],
 
-    "@oh-my-pi/pi-tui": ["@oh-my-pi/pi-tui@file:../../.bun/install/global/node_modules/@oh-my-pi/pi-tui", { "dependencies": { "@oh-my-pi/omptype": "18.6.0", "@oh-my-pi/pi-agent-core": "18.6.0", "@oh-my-pi/pi-ai": "18.6.0", "@oh-my-pi/pi-catalog": "18.6.0", "@oh-my-pi/pi-natives": "18.6.0", "@oh-my-pi/pi-utils": "18.6.0", "@oh-my-pi/pi-wire": "18.6.0", "@oh-my-pi/snapcompact": "18.6.0" }, "devDependencies": { "kitty-vt-wasm": "^0.2.0" } }],
+    "@oh-my-pi/pi-tui": ["@oh-my-pi/pi-tui@18.6.0", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/@oh-my-pi/pi-tui/-/pi-tui-18.6.0.tgz", { "dependencies": { "@oh-my-pi/omptype": "18.6.0", "@oh-my-pi/pi-agent-core": "18.6.0", "@oh-my-pi/pi-ai": "18.6.0", "@oh-my-pi/pi-catalog": "18.6.0", "@oh-my-pi/pi-natives": "18.6.0", "@oh-my-pi/pi-utils": "18.6.0", "@oh-my-pi/pi-wire": "18.6.0", "@oh-my-pi/snapcompact": "18.6.0" } }, "sha512-K+76PDG98YPsodzjgpP6SCUZaVRRXj7DY7UGeEZ1ohfFIigOXb7pBe+Izb1pJ8qlZllbybga8SvoKPwTSMs74A=="],
 
     "@oh-my-pi/pi-utils": ["@oh-my-pi/pi-utils@18.6.0", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/@oh-my-pi/pi-utils/-/pi-utils-18.6.0.tgz", { "dependencies": { "@oh-my-pi/pi-natives": "18.6.0" } }, "sha512-MPfD1/mvsc/hZHpIM5C1I5JaHiMfXyZ05I54ng+aOaou6E9huatE7G26p54wpPALTy+RXB97XHyct/ScHxMuaQ=="],
 
@@ -225,8 +225,6 @@
 
     "has-property-descriptors": ["has-property-descriptors@1.0.2", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz", { "dependencies": { "es-define-property": "^1.0.0" } }, "sha512-55JNKuIW+vq4Ke1BjOTjM2YctQIvCT7GFzHwmfZPGo5wnrgkid0YQtnAleFSqumZm4az3n2BS+erby5ipJdgrg=="],
 
-    "kitty-vt-wasm": ["kitty-vt-wasm@0.2.0", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/kitty-vt-wasm/-/kitty-vt-wasm-0.2.0.tgz", {}, "sha512-RJNzy9r5ql8CKkocjkg0FKC1MZoWM0R8leb2VB5hsgrP/4HHlumeODHriOw4Jk2dDsCOmPxWuwFQyqDiy0m8Kw=="],
-
     "long": ["long@5.3.2", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/long/-/long-5.3.2.tgz", {}, "sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA=="],
 
     "lucide-react": ["lucide-react@1.51.0", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/lucide-react/-/lucide-react-1.51.0.tgz", { "peerDependencies": { "@types/react": "*", "react": "^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0" }, "optionalPeers": ["@types/react"] }, "sha512-9929jimol5y7VbXUlVKcgURMSeIxFJB7dtWCkRAaNnF7KiCRkSkhmqWPUmAmUFYPezNawFk6qvz3Mu0gEnfI4g=="],
@@ -304,8 +302,6 @@
     "yargs-parser": ["yargs-parser@22.0.0", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/yargs-parser/-/yargs-parser-22.0.0.tgz", {}, "sha512-rwu/ClNdSMpkSrUb+d6BRsSkLUq1fmfsY6TOpYzTwvwkg1/NRG85KBy3kq++A8LKQwX6lsu+aWad+2khvuXrqw=="],
 
     "zod": ["zod@3.25.76", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/zod/-/zod-3.25.76.tgz", {}, "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="],
-
-    "@oh-my-pi/pi-coding-agent/@oh-my-pi/pi-tui": ["@oh-my-pi/pi-tui@18.6.0", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/@oh-my-pi/pi-tui/-/pi-tui-18.6.0.tgz", { "dependencies": { "@oh-my-pi/omptype": "18.6.0", "@oh-my-pi/pi-agent-core": "18.6.0", "@oh-my-pi/pi-ai": "18.6.0", "@oh-my-pi/pi-catalog": "18.6.0", "@oh-my-pi/pi-natives": "18.6.0", "@oh-my-pi/pi-utils": "18.6.0", "@oh-my-pi/pi-wire": "18.6.0", "@oh-my-pi/snapcompact": "18.6.0" } }, "sha512-K+76PDG98YPsodzjgpP6SCUZaVRRXj7DY7UGeEZ1ohfFIigOXb7pBe+Izb1pJ8qlZllbybga8SvoKPwTSMs74A=="],
 
     "@opentelemetry/exporter-metrics-otlp-http/@opentelemetry/resources": ["@opentelemetry/resources@2.9.0", "https://amazon-149122183214.d.codeartifact.us-west-2.amazonaws.com/npm/shared/@opentelemetry/resources/-/resources-2.9.0.tgz", { "dependencies": { "@opentelemetry/core": "2.9.0", "@opentelemetry/semantic-conventions": "^1.29.0" }, "peerDependencies": { "@opentelemetry/api": ">=1.3.0 <1.10.0" } }, "sha512-jyA5MBLQ+Dkl3+JsZkUoUvL7yHvU64kLsvpXKarWm6347Sl1t1bXFTFykUePNpT5WH5pm9a2Qtt03iIYQhZ1Fg=="],
 

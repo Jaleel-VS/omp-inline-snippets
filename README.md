@@ -1,61 +1,163 @@
 # omp inline snippets
 
-A local omp extension for compact `%name` references anywhere in a normal prompt. Definitions are attached to the submitted user message, visible in conversation history. No extra model call, tool, or system-prompt injection.
-
-## Use
-
-Start a new `ompa` session after installing the extension. Existing sessions do not hot-reload extension code.
+Use short, named instructions anywhere in an [omp](https://omp.sh/) prompt.
 
 ```text
 Review this change. Follow %minimal_change and %concise.
 ```
 
-Type `%con`, then press Tab to show completion suggestions. Tab accepts `%concise` without inserting its full text. Submit normally to attach the referenced instructions. Each definition is attached once, in first-use order.
+References stay compact while you write. When you submit, the extension adds their full instructions to the message. The model receives the text, not an unexplained shortcut.
 
-Recognized references render bold with a theme-aware highlight in the composer. Partial names stay plain; unknown names use the error color. Escaped references and references inside code remain literal. This is styling only: normal cursor movement, character deletion, selection, and copying are unchanged. Shell/Python composer modes bypass snippet styling. Both ANSI terminals and Tern's native composer are supported.
+![Recognized, partial, unknown, and literal snippet references in Tern's dark composer](docs/images/composer-dark.png)
 
-Two starter snippets are installed in `~/.omp/agent/prompts/`: `concise.md` and `minimal_change.md`.
+## Install
 
-## Add or edit snippets
+Requires omp. Tested with **omp 18.6.0** and Bun 1.4.0. This is an omp extension, not a standalone program or a Pi extension.
 
-Save a Markdown file in `~/.omp/agent/prompts/` (global) or `<current-working-directory>/.omp/prompts/` (project). Nested directories are supported; the filename without `.md` is the name.
+```sh
+omp install github:Jaleel-VS/omp-inline-snippets
+```
+
+Start a new omp session after installing. Existing sessions do not reload extension code.
+
+Installation does not create or overwrite your prompt files. Add a snippet as described below, then use it in any normal prompt.
+
+## Create your first snippet
+
+Create the directory if it does not exist:
+
+```sh
+mkdir -p ~/.omp/agent/prompts
+```
+
+Save this as `~/.omp/agent/prompts/concise.md`:
 
 ```markdown
 ---
-description: Explain the reasoning before changing code
+description: Keep the answer brief and concrete
 ---
-Explain the proposed change and its tradeoffs before editing files.
+Keep the answer brief and concrete. Put the conclusion first; include only relevant evidence and risks.
 ```
 
-Save as `explain_first.md` and reference `%explain_first`. Names start with a letter or underscore and may contain letters, digits, underscores, and hyphens. Names are case-sensitive; completion matches prefixes case-insensitively.
+In omp, enter `/snippets` to load it for autocomplete. Then write:
 
-Use `/snippets` to refresh and list definitions for autocomplete. Submission always rereads files, so edits are used immediately. Duplicate filenames across directories or scopes are errors, not silent overrides. Empty files and malformed YAML are errors. The same files also serve as native `/name` prompt templates, but those reload only when omp restarts.
+```text
+Explain this function. Follow %concise.
+```
 
-Snippets are literal text: no argument substitution, Handlebars evaluation, or recursive snippet expansion. Use simple instruction snippets rather than parameterized slash templates.
+The filename is the snippet name. `concise.md` becomes `%concise`. The optional `description` appears in autocomplete.
 
-## Literal references and errors
+More examples are included in [`examples/`](examples/). Copy the files you want into your prompt directory. Do not overwrite existing files unless you intend to replace their instructions.
 
-Backtick code spans, backtick/tilde fenced blocks, URL/path-embedded tokens, and ordinary percentages are not expanded. Write `\%concise` in prose to send literal `%concise` without attaching its definition.
+## Autocomplete and highlighting
 
-Unknown names stop submission and restore the draft, with an error notification. This extension's interactive workflow was verified in Tern. Do not assume equivalent print/RPC/ACP behavior; their input-event dispatch/UI differs.
+Type `%con`, then press **Tab** to show suggestions. Press **Tab** again to accept `%concise`. Selecting a suggestion inserts the reference, not the full instructions.
+
+![Snippet autocomplete with its description](docs/images/autocomplete.png)
+
+| Reference | Appearance |
+| --- | --- |
+| Known name, such as `%concise` | Bold, with a theme-aware highlight |
+| Partial name, such as `%con` | Plain text while it matches a possible name |
+| Unknown name, such as `%missing` | Error color |
+| Reference inside code, or escaped with a backslash | No snippet styling |
+
+Highlighting works in ordinary ANSI terminals and [Tern](https://stencil.so/tern)'s native composer. It does not change the text: cursor movement, selection, copying, and character deletion still work normally. Shell and Python composer modes bypass snippet styling.
+
+![The same reference states in Tern's light composer](docs/images/composer-light.png)
+
+## What gets sent
+
+This draft:
+
+```text
+Explain this function. Follow %concise.
+```
+
+is sent with a definitions section:
+
+```text
+Explain this function. Follow %concise.
+
+Referenced instructions (apply the definitions below to the references in this message):
+%concise:
+Keep the answer brief and concrete. Put the conclusion first; include only relevant evidence and risks.
+```
+
+The expanded message is visible in conversation history. Each referenced definition is added once, in first-use order. There is no extra model call or tool lookup.
+
+These are user instructions, not system rules. The extension resolves references; it cannot guarantee model compliance or make a rule permanently active.
+
+## Where snippets live
+
+| Scope | Directory |
+| --- | --- |
+| All projects | `~/.omp/agent/prompts/` |
+| Current project | `<working-directory>/.omp/prompts/` |
+
+If `PI_CODING_AGENT_DIR` is set, its `prompts/` directory replaces the default global directory.
+
+Nested directories are supported, but only the filename defines the name. Use unique filenames across all directories and scopes. Duplicate names are errors, not silent overrides.
+
+Names start with a letter or underscore. They may contain letters, numbers, underscores, and hyphens. Names are case-sensitive; autocomplete searches prefixes without regard to case.
+
+The same Markdown files also work as omp's native `/name` prompt templates. Native templates must start the message; this extension lets you use `%name` inside ordinary prose.
+
+## Editing and reloading
+
+- **Submission rereads the files**, so edited instructions are used immediately.
+- Use **`/snippets`** to refresh autocomplete and list the loaded snippets.
+- Restart omp after changing the extension's source code.
+- Native `/name` prompt templates have their own loading behavior; restart omp to refresh those.
+
+Snippet bodies are literal text. The extension does not evaluate Handlebars, substitute arguments, or recursively expand references inside a snippet. Use short instruction snippets rather than parameterized prompt templates.
+
+## Literal text and errors
+
+To mention a snippet without applying it, write `\%concise`. The backslash is removed when the message is sent.
+
+References inside backtick code spans, backtick or tilde fenced blocks, and URL/path-embedded tokens are left alone. Ordinary percentages such as `90%` are not references.
+
+An unknown name stops submission and restores your draft with an error notification. Empty snippet files, invalid YAML, and duplicate names are also errors. Fix the file or reference, then try again.
 
 ## Change the trigger
 
 ```sh
-ompa --snippet-prefix '&'
+omp --snippet-prefix '&'
 ```
 
-The prefix must be one punctuation character, excluding `/`, `\`, and backtick. `%` is the default. Only one prefix is active per session.
+The default is `%`. Only one trigger is active per session. It must be one punctuation character, excluding `/`, `\`, and backtick.
 
-## Local development
+## Development
+
+Requires Bun. Clone the repository, install dependencies, and run the checks:
 
 ```sh
-bun install
+git clone https://github.com/Jaleel-VS/omp-inline-snippets.git
+cd omp-inline-snippets
+bun install --frozen-lockfile
 bun test
 bun run check
-omp plugin link /Users/jdvans/claudework/omp-snippets
 ```
 
-The development dependencies point at this machine's installed omp 18.6.0 packages so the extension is checked against the host's APIs. Restart omp after changing extension source.
+Load the extension for one session:
 
-Verified: nine behavioral tests, TypeScript check, actual ANSI rendering, native Tern light/dark token styling, and Tern/ompa autocomplete and expanded submission with a model response. Unknown-reference rejection preserves the draft.
+```sh
+omp --extension .
+```
+
+Or link it for regular use:
+
+```sh
+omp plugin link .
+```
+
+Restart omp to load source changes. Development dependency versions are pinned to the omp version used for verification. `bun.lock` is tracked; generated `target/` files and `node_modules/` are ignored.
+
+## Verification and limits
+
+Verified with nine behavioral tests, TypeScript checking, actual ANSI rendering, and Tern light/dark rendering. The live omp flow covered autocomplete, compact selection, normal backspace, expanded submission with a model response, and unknown-reference rejection with draft preservation.
+
+The supported workflow is interactive omp. Print, RPC, ACP, and subagent modes have not been verified. Styling uses omp's custom-editor API; another extension that replaces the editor may conflict with it.
+
+Extensions run inside omp with its process privileges. This extension reads local prompt files and decorates the composer. It does not make network requests, execute snippet bodies, or write your prompt files.
