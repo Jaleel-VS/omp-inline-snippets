@@ -34,3 +34,62 @@ test("shell mode bypasses snippet decoration", () => {
   instance.setText("! echo %concise");
   expect(instance.describeDecorations(["! echo %concise"]).filter(range => range.s.includes("mark"))).toEqual([]);
 });
+
+test("typing a reference opens suggestions without Tab and Escape dismisses without changing the draft", async () => {
+  const instance = editor();
+  instance.setTextAssistProvider({ getWordCompletion: () => "flicting" });
+  let updated = Promise.withResolvers<void>();
+  instance.onAutocompleteUpdate = () => updated.resolve();
+  instance.setAutocompleteProvider({
+    async getSuggestions(lines, line, col) {
+      const text = lines[line].slice(0, col);
+      const prefix = /%[A-Za-z_]*$/.exec(text)?.[0];
+      return prefix && "%concise".startsWith(prefix) ? { prefix, items: [{ value: "%concise", label: "%concise" }] } : null;
+    },
+    applyCompletion(lines, line, col, item, prefix) {
+      const updated = lines.slice();
+      updated[line] = lines[line].slice(0, col - prefix.length) + item.value + lines[line].slice(col);
+      return { lines: updated, cursorLine: line, cursorCol: col - prefix.length + item.value.length };
+    },
+  });
+  instance.handleInput("Use %con");
+  await updated.promise;
+  expect(instance.isShowingAutocomplete()).toBe(true);
+  expect(instance.getText()).toBe("Use %con");
+  instance.handleInput("\x1b");
+  expect(instance.isShowingAutocomplete()).toBe(false);
+  expect(instance.getText()).toBe("Use %con");
+  updated = Promise.withResolvers<void>();
+  instance.handleInput("c");
+  await updated.promise;
+  expect(instance.isShowingAutocomplete()).toBe(true);
+  instance.handleInput("\t");
+  expect(instance.getText()).toBe("Use %concise");
+  expect(instance.isShowingAutocomplete()).toBe(false);
+});
+
+test("native text edits trigger suggestions while code, escapes, and shell edits do not query completion", async () => {
+  const instance = editor();
+  const requested: string[] = [];
+  const updated = Promise.withResolvers<void>();
+  instance.onAutocompleteUpdate = () => updated.resolve();
+  instance.setAutocompleteProvider({
+    async getSuggestions(lines) {
+      requested.push(lines.join("\n"));
+      return null;
+    },
+    applyCompletion(lines, line, col) { return { lines, cursorLine: line, cursorCol: col }; },
+  });
+  for (const text of ["`%con", "\\%con", "```\n%con"]) {
+    instance.setText("");
+    instance.handleInput(text);
+  }
+  instance.setText("");
+  instance.applyHostEdit({ len: 0, from: 0, to: 0, text: "Use %con", cursor: 8 });
+  await updated.promise;
+  expect(requested).toEqual(["Use %con"]);
+  instance.composerState = () => ({ shell: { kind: "bash", excluded: false }, running: false });
+  instance.setText("");
+  instance.handleInput("%con");
+  expect(requested).toEqual(["Use %con"]);
+});

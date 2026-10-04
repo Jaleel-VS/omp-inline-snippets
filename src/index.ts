@@ -31,6 +31,13 @@ export default function inlineSnippets(pi: ExtensionAPI) {
     ctx.ui.addAutocompleteProvider(current => {
       // Preserve optional methods and their receiver; do not replace native completion behavior.
       const overrides: Partial<AutocompleteProvider> = {
+        async getForceFileSuggestions(lines, line, col, signal) {
+          if (completionPrefix(lines, line, col, prefix) !== null) return overrides.getSuggestions!(lines, line, col, signal);
+          return current.getForceFileSuggestions?.(lines, line, col, signal) ?? current.getSuggestions(lines, line, col, signal);
+        },
+        shouldTriggerFileCompletion(lines, line, col) {
+          return completionPrefix(lines, line, col, prefix) !== null || (current.shouldTriggerFileCompletion?.(lines, line, col) ?? true);
+        },
         async getSuggestions(lines, line, col, signal, onPartial) {
           const token = completionPrefix(lines, line, col, prefix);
           if (token === null) return current.getSuggestions(lines, line, col, signal, onPartial);

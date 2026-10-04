@@ -51,7 +51,7 @@ More examples are included in [`examples/`](examples/). Copy the files you want 
 
 ## Autocomplete and highlighting
 
-Type `%con`, then press **Tab** to show suggestions. Press **Tab** again to accept `%concise`. Selecting a suggestion inserts the reference, not the full instructions.
+Type `%` or a partial name such as `%con` to open suggestions automatically. Use the arrow keys to choose a match and **Tab** to accept it. **Escape** dismisses the suggestions without changing your draft; typing more of the name opens them again. Selecting a suggestion inserts the compact reference, not the full instructions. Tab can also reopen suggestions manually.
 
 ![Snippet autocomplete with its description](docs/images/autocomplete.png)
 
@@ -156,7 +156,7 @@ Restart omp to load source changes. Development dependency versions are pinned t
 
 ## Verification and limits
 
-Verified with nine behavioral tests, TypeScript checking, actual ANSI rendering, and Tern light/dark rendering. The live omp flow covered autocomplete, compact selection, normal backspace, expanded submission with a model response, and unknown-reference rejection with draft preservation.
+Verified with eleven behavioral tests, TypeScript checking, actual ANSI rendering, and Tern light/dark rendering. The live omp flow covered automatic suggestions without Tab, Escape dismissal, compact selection, literal-reference suppression, normal backspace, expanded submission with a model response, and unknown-reference rejection with draft preservation. Regression tests also cover native text edits and precedence over prose word-completion ghosts.
 
 The supported workflow is interactive omp. Print, RPC, ACP, and subagent modes have not been verified. Styling uses omp's custom-editor API; another extension that replaces the editor may conflict with it.
 

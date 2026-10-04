@@ -1,6 +1,8 @@
 import { CustomEditor } from "@oh-my-pi/pi-tui/prompt/custom-editor";
 import type { Theme } from "@oh-my-pi/pi-tui/theme";
-import { references, type Snippet } from "./snippets";
+import type { NativeTextEdit } from "@oh-my-pi/pi-tui/native/node";
+import type { EditorTextAssistProvider } from "@oh-my-pi/pi-tui/components/editor";
+import { completionPrefix, references, type Snippet } from "./snippets";
 
 interface SnippetState { prefix: string; snippets: ReadonlyMap<string, Snippet>; theme: Theme }
 interface TokenStyle { start: number; end: number; known: boolean }
@@ -51,6 +53,41 @@ export class SnippetEditor extends CustomEditor {
         ...tokens.map(token => ({ from: token.start, to: token.end, s: token.known ? "accent strong mark" : "error strong" })),
       ];
     };
+  }
+
+  override setTextAssistProvider(provider: EditorTextAssistProvider | undefined): void {
+    super.setTextAssistProvider(provider && {
+      ...provider,
+      getWordCompletion: (lines, line, col) => {
+        if (!this.composerState().shell && completionPrefix(lines, line, col, this.#state().prefix) !== null) return null;
+        return provider.getWordCompletion?.(lines, line, col) ?? null;
+      },
+    });
+  }
+
+  override handleInput(data: string): void {
+    const before = this.getText();
+    const wasCompleting = this.isAutocompleteActive();
+    super.handleInput(data);
+    this.#completeAfterEdit(before, wasCompleting);
+  }
+
+  override applyHostEdit(edit: NativeTextEdit): void {
+    const before = this.getText();
+    const wasCompleting = this.isAutocompleteActive();
+    super.applyHostEdit(edit);
+    this.#completeAfterEdit(before, wasCompleting);
+  }
+
+  #completeAfterEdit(before: string, wasCompleting: boolean): void {
+    if (wasCompleting || this.isAutocompleteActive() || this.composerState().shell || this.getText() === before) return;
+    const { line, col } = this.getCursor();
+    const token = completionPrefix(this.getLines(), line, col, this.#state().prefix);
+    if (token === null) return;
+    // omp 18.6 has no public prefix-trigger API. Reuse its completion action;
+    // the provider routes forced completion to snippets only in this context.
+    // Never feed this through our override or when a popup could accept a choice.
+    super.handleInput("\t");
   }
 
   #styles(text: string): readonly TokenStyle[] {
