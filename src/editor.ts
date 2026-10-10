@@ -1,4 +1,4 @@
-import { CustomEditor } from "@oh-my-pi/pi-tui/prompt/custom-editor";
+import { CustomEditor } from "@oh-my-pi/pi-coding-agent";
 import type { Theme } from "@oh-my-pi/pi-tui/theme";
 import type { NativeTextEdit } from "@oh-my-pi/pi-tui/native/node";
 import type { EditorTextAssistProvider } from "@oh-my-pi/pi-tui/components/editor";
